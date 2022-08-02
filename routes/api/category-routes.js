@@ -1,11 +1,7 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
-// The `/api/categories` endpoint
-
 router.get('/', (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
   Category.findAll({
     include: [
       {
@@ -19,12 +15,10 @@ router.get('/', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
-    });  
+    });
 });
 
 router.get('/:id', (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
   Category.findOne({
     attributes: { exclude: ['password'] },
     where: {
@@ -48,7 +42,7 @@ router.get('/:id', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
-    });  
+    });
 });
 
 router.post('/', (req, res) => {
@@ -63,8 +57,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  // update a category by its `id` value
-  Category.update( 
+  Category.update(
     {
       category_name: req.body.category_name
     },

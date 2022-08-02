@@ -1,11 +1,8 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
-// The `/api/tags` endpoint
 
 router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
   Tag.findAll({
     include: [
       {
@@ -16,7 +13,6 @@ router.get('/', (req, res) => {
         model: Product,
         attributes: ['product_name'],
         through: ProductTag
-        // as: 'product_id'
       }
     ]
   })
@@ -24,7 +20,7 @@ router.get('/', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
-    });  
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -36,8 +32,6 @@ router.get('/:id', (req, res) => {
       {
         model: Product,
         attributes: ['id', 'product_name', 'price'],
-        // model: ProductTag,
-        // attributes: ['id', 'product_id', 'tag_id']
       }
     ]
   })
@@ -51,7 +45,7 @@ router.get('/:id', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
-    });  
+    });
 });
 
 router.post('/', (req, res) => {
@@ -66,7 +60,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  Tag.update(req.body, 
+  Tag.update(req.body,
     {
       where: {
         id: req.params.id
@@ -102,7 +96,7 @@ router.delete('/:id', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
-    });  
+    });
 });
 
 module.exports = router;
